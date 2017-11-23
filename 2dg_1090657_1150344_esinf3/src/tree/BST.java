@@ -14,6 +14,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
 
     /**
      * Nested static class for a binary search tree node.
+     *
      * @param <E>
      */
     protected static class Node<E> {
@@ -89,16 +90,27 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     * Inserts an element in the tree.
      */
     public void insert(E element) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        root = insert(element, root);
     }
 
     private Node<E> insert(E element, Node<E> node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (node == null) {
+            node = new Node(element, null, null);
+            return node;
+        }
+        if (element.compareTo(node.getElement()) < 0) {
+            node.left = insert(element, node.left);
+        } else if (element.compareTo(node.getElement()) > 0) {
+            node.right = insert(element, node.right);
+        }
+        return node;
     }
 
     /**
      * Removes an element from the tree maintaining its consistency as a Binary
      * Search Tree.
+     *
+     * @param element
      */
     public void remove(E element) {
         root = remove(element, root());
