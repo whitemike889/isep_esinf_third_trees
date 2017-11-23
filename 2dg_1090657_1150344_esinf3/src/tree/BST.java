@@ -321,11 +321,24 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     * @return a map with a list of nodes by each tree level
      */
     public Map<Integer, List<E>> nodesByLevel() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Map<Integer, List<E>> map = new HashMap<>();
+        processBstByLevel(root, map, 0);
+        return map;
     }
 
     private void processBstByLevel(Node<E> node, Map<Integer, List<E>> result, int level) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (node == null) {
+            return;
+        }
+        List<E> list = result.get(level);
+        if (list == null) {
+            list = new ArrayList();
+        }
+
+        list.add(node.getElement());
+        result.put(level, list);
+        processBstByLevel(node.getLeft(), result, level + 1);
+        processBstByLevel(node.getRight(), result, level + 1);
     }
 
 //#########################################################################
