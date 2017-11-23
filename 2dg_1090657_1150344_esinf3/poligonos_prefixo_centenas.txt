@@ -1,0 +1,9 @@
+100;hecta
+200;dihecta
+300;trihecta
+400;tetrahecta
+500;pentahecta
+600;hexahecta
+700;heptahecta
+800;octahecta
+900;enneahecta
