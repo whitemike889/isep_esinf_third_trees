@@ -55,15 +55,15 @@ public class BSTTest {
     @Test
     public void testInsert() {
         System.out.println("insert");
-        int arr[] = {20,15,10,13,8,17,40,50,30,20,15,10};
-        BST<Integer> instance = new BST();
+        int array[] = {20,15,10,13,8,17,40,50,30,20,15,10};
+        BST<Integer> inst = new BST();
         for (int i=0; i<9; i++){            //new elements
-            instance.insert(arr[i]);
-            assertEquals("size should be = "+(i+1),instance.size(), i+1);
+            inst.insert(array[i]);
+            assertEquals("size should be = "+(i+1),inst.size(), i+1);
         }
-        for(int i=9; i<arr.length; i++){    //duplicated elements => same size
-            instance.insert(arr[i]);
-            assertEquals("size should be = 9",instance.size(), 9);
+        for(int i=9; i<array.length; i++){    //duplicated elements => same size
+            inst.insert(array[i]);
+            assertEquals("size should be = 9",inst.size(), 9);
         }
     }
     /**
