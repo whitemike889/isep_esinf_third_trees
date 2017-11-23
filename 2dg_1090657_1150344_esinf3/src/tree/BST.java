@@ -297,8 +297,8 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         if (node == null) {
             return;
         }
-        preOrderSubtree(node.getLeft(), snapshot);
-        preOrderSubtree(node.getRight(), snapshot);
+        posOrderSubtree(node.getLeft(), snapshot);
+        posOrderSubtree(node.getRight(), snapshot);
         snapshot.add(node.getElement());
     }
 
