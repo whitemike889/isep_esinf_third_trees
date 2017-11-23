@@ -1,4 +1,3 @@
-
 package tree;
 
 import java.io.File;
@@ -14,39 +13,62 @@ import java.util.Scanner;
  * @author DEI-ESINF
  */
 public class TREE_WORDS extends BST<TextWord> {
-    
-    public void createTree() throws FileNotFoundException{
-        Scanner readfile = new Scanner(new File("src/PL/xxx.xxx"));
-        while(readfile.hasNextLine()){
+
+    public void createTree() throws FileNotFoundException {
+        Scanner readfile = new Scanner(new File("src/tree/xxx.xxx"));
+        while (readfile.hasNextLine()) {
             String[] pal = readfile.nextLine().split("(\\,)|(\\s)|(\\.)");
-            for(String word : pal)
-                if (word.length() >0 )
+            for (String word : pal) {
+                if (word.length() > 0) {
                     insert(new TextWord(word, 1));
+                }
+            }
         }
         readfile.close();
     }
 
     /**
-     * Inserts a new word in the tree, or increments the number of its occurrences.
-       * @param element
+     * Inserts a new word in the tree, or increments the number of its
+     * occurrences.
+     *
+     * @param element
      */
     @Override
-    public void insert(TextWord element){
+    public void insert(TextWord element) {
         root = insert(element, root);
     }
-    
-    private Node<TextWord> insert(TextWord element, Node<TextWord> node){
-        throw new UnsupportedOperationException("Not supported yet.");
+
+    private Node<TextWord> insert(TextWord element, Node<TextWord> node) {
+        if (node == null) {
+            return null;
+        }
+        if (element.equals(node.getElement())) {
+            node.getElement().incOcorrences();
+            return node;
+        }
+        insert(element, node.getLeft());
+        insert(element, node.getRight());
+
+        return null;
 
     }
 
     /**
      * Returns a map with a list of words for each occurrence found.
+     *
      * @return a map with a list of words for each occurrence found.
      */
-    public Map<Integer,List<String>> getWordsOccurrences(){
-        throw new UnsupportedOperationException("Not supported yet.");
-
+    public Map<Integer, List<String>> getWordsOccurrences() {
+        Map<Integer, List<String>> map = new HashMap<>();
+        for (TextWord tw : this.inOrder()) {
+            if (map.containsKey(tw.getOcorrences())) {
+                map.get(tw.getOcorrences()).add(tw.getWord());
+            } else {
+                map.put(tw.getOcorrences(), new ArrayList<>());
+                map.get(tw.getOcorrences()).add(tw.getWord());
+            }
+        }
+        return map;
     }
 
 }
