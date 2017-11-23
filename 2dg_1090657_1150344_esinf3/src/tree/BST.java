@@ -14,10 +14,11 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
 
     /**
      * Nested static class for a binary search tree node.
+     *
      * @param <E>
      */
     protected static class Node<E> {
-
+        
         private E element;          // an element stored at this node
         private Node<E> left;       // a reference to the left child (if any)
         private Node<E> right;      // a reference to the right child (if any)
@@ -39,11 +40,11 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         public E getElement() {
             return element;
         }
-
+        
         public Node<E> getLeft() {
             return left;
         }
-
+        
         public Node<E> getRight() {
             return right;
         }
@@ -52,11 +53,11 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         public void setElement(E e) {
             element = e;
         }
-
+        
         public void setLeft(Node<E> leftChild) {
             left = leftChild;
         }
-
+        
         public void setRight(Node<E> rightChild) {
             right = rightChild;
         }
@@ -91,7 +92,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     public void insert(E element) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     private Node<E> insert(E element, Node<E> node) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -103,9 +104,9 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     public void remove(E element) {
         root = remove(element, root());
     }
-
+    
     private Node<E> remove(E element, Node<E> node) {
-
+        
         if (node == null) {
             return null;    //throw new IllegalArgumentException("Element does not exist");
         }
@@ -128,7 +129,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         } else {
             node.setRight(remove(element, node.getRight()));
         }
-
+        
         return node;
     }
 
@@ -137,11 +138,14 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     * @return number of nodes in the tree
      */
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return size(root);
     }
-
+    
     private int size(Node<E> node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (node == null) {
+            return 0;
+        }
+        return 1 + size(node.getLeft()) + size(node.getRight());
     }
 
     /*
@@ -149,7 +153,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     * @return height 
      */
     public int height() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return (root == null) ? -1 : height(root);
     }
 
     /*
@@ -158,7 +162,14 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     * @return height 
      */
     protected int height(Node<E> node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (node == null) {
+            return -1;
+        }
+        int hleft = height(node.getLeft());
+        int hright = height(node.getRight());
+        
+        return 
+        
     }
 
     /**
@@ -169,7 +180,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     public E smallestElement() {
         return smallestElement(root);
     }
-
+    
     protected E smallestElement(Node<E> node) {
         if (node.getLeft() != null) {
             return smallestElement(node.getLeft());
@@ -287,7 +298,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     public Map<Integer, List<E>> nodesByLevel() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     private void processBstByLevel(Node<E> node, Map<Integer, List<E>> result, int level) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -301,7 +312,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         toStringRec(root, 0, sb);
         return sb.toString();
     }
-
+    
     private void toStringRec(Node<E> root, int level, StringBuilder sb) {
         if (root == null) {
             return;
@@ -317,6 +328,6 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         }
         toStringRec(root.getLeft(), level + 1, sb);
     }
-
+    
 } //----------- end of BST class -----------
 
