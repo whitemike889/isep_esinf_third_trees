@@ -83,6 +83,9 @@ public class App {
         expDezenas = construirNomePolDezenas(dezenas);
         expUnidades = construirNomePolUnidades(unidades);
         
+        if(dezenas >= 10 && dezenas <= 29)
+            return expCentenas+expDezenas+"gon";
+        
         return expCentenas+expDezenas+expUnidades;
     }
 
