@@ -164,7 +164,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
     * @return height 
      */
     public int height() {
-        return (root == null) ? -1 : height(root);
+        return height(root);
     }
 
     /*
@@ -203,6 +203,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
      * Returns the Node containing a specific Element, or null otherwise.
      *
      * @param element the element to find
+     * @param node
      * @return the Node that contains the Element, or null otherwise
      *
      * This method despite not being essential is very useful. It is written
