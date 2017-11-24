@@ -27,6 +27,12 @@ public class App {
         arvore_centenas = new AVL<>();
     }
 
+    /**
+     * Método para inserir um determinado polígono na árvore adequada
+     *
+     * @param p Poligono a inserir
+     * @return true or false
+     */
     public boolean inserirPoligono(Poligono p) {
         if (p.getNumLados() < 0) {
             return false;
@@ -48,6 +54,9 @@ public class App {
         return false;
     }
 
+    /**
+     * Método para ler os ficheiros dos polígonos para as estruturas de dados
+     */
     public void lerDados() {
         Ficheiro f = new Ficheiro();
         f.lerPoligonos(pol_pref_uni, this);
@@ -56,18 +65,38 @@ public class App {
 
     }
 
+    /**
+     * Retorna quantos poligonos das unidades existem
+     *
+     * @return
+     */
     public int qtdPoligonosUnidades() {
         return arvore_unidades.size();
     }
 
+    /**
+     * Retorna quantos poligonos das dezenas existem
+     *
+     * @return
+     */
     public int qtdPoligonosDezenas() {
         return arvore_dezenas.size();
     }
 
+    /**
+     * Retorna quantos poligonos das centenas existem
+     *
+     * @return
+     */
     public int qtdPoligonosCentenas() {
         return arvore_centenas.size();
     }
 
+    /**
+     * Retorna quantos poligonos totais existem
+     *
+     * @return
+     */
     public int qtdPoligonosTotal() {
         return arvore_unidades.size() + arvore_dezenas.size() + arvore_centenas.size();
 
