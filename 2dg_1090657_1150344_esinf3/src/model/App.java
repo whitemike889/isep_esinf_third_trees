@@ -54,6 +54,7 @@ public class App {
         return false;
     }
 
+    //=================================A========================================
     /**
      * Método para ler os ficheiros dos polígonos para as estruturas de dados
      */
