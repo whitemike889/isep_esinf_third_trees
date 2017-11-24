@@ -91,7 +91,34 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
     }
 
     private Node<E> remove(E element, BST.Node<E> node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (node == null) {
+            return null;
+        }
+        if (node.getElement().equals(element)) {
+            if (node.getLeft() == null && node.getRight() == null) {
+                return null;
+            }
+            if (node.getLeft() == null) {
+                return node.getRight();
+            }
+            if (node.getRight() == null) {
+                return node.getLeft();
+            }
+            E smallElement = smallestElement(node.getRight());
+            node.setElement(smallElement);
+            node.setRight(remove(smallElement, node.getRight()));
+            node = balanceNode(node);
+        } else {
+            if (node.getElement().compareTo(element) > 0) {
+                node.setLeft(remove(element, node.getLeft()));
+                node = balanceNode(node);
+            } else {
+                node.setRight(remove(element, node.getRight()));
+                node = balanceNode(node);
+            }
+
+        }
+        return node;
     }
 
     public boolean equals(AVL<E> second) {
