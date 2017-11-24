@@ -28,6 +28,9 @@ public class App {
     }
 
     public boolean inserirPoligono(Poligono p) {
+        if (p.getNumLados() < 0) {
+            return false;
+        }
         if (p.getNumLados() < 10) {
             arvore_unidades.insert(p);
             return true;
