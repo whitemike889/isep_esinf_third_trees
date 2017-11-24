@@ -17,6 +17,10 @@ public class App {
     private AVL<Poligono> arvore_dezenas;
     private AVL<Poligono> arvore_centenas;
 
+    private static final String pol_pref_uni = "poligonos_prefixo_unidades.txt";
+    private static final String pol_pref_dez = "poligonos_prefixo_dezenas.txt";
+    private static final String pol_pref_cent = "poligonos_prefixo_centenas.txt";
+
     public App() {
         arvore_unidades = new AVL<>();
         arvore_dezenas = new AVL<>();
@@ -39,6 +43,14 @@ public class App {
             }
         }
         return false;
+    }
+
+    public void lerDados() {
+        Ficheiro f = new Ficheiro();
+        f.lerPoligonos(pol_pref_uni, this);
+        f.lerPoligonos(pol_pref_dez, this);
+        f.lerPoligonos(pol_pref_cent, this);
+
     }
 
 }
