@@ -53,4 +53,20 @@ public class App {
 
     }
 
+    public int qtdPoligonosUnidades() {
+        return arvore_unidades.size();
+    }
+
+    public int qtdPoligonosDezenas() {
+        return arvore_dezenas.size();
+    }
+
+    public int qtdPoligonosCentenas() {
+        return arvore_centenas.size();
+    }
+
+    public int qtdPoligonosTotal() {
+        return arvore_unidades.size() + arvore_dezenas.size() + arvore_centenas.size();
+
+    }
 }
