@@ -26,9 +26,12 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
 
     private Node<E> leftRotation(Node<E> node) {
         Node<E> rightson = node.getRight();
-        node.setLeft(rightson.getLeft());
+
+        node.setRight(rightson.getLeft());
         rightson.setLeft(node);
+
         node = rightson;
+
         return node;
     }
 
@@ -70,19 +73,17 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
         if (node == null) {
             return new Node(element, null, null);
         }
-        int compareResult = element.compareTo(node.getElement());
-        if (compareResult == 0) {
+
+        if (node.getElement().compareTo(element) == 0) {      // replace existing element
             node.setElement(element);
-        } else {
-            if (compareResult < 0) {
-                node.setLeft(insert(element, node.getLeft()));
-                node = balanceNode(node);
-            } else if (compareResult > 0) {
-                node.setRight(insert(element, node.getRight()));
-                node = balanceNode(node);
-            }
+        } else if (element.compareTo(node.getElement()) < 0) {  // add element to the left subtree
+            node.setLeft(insert(element, node.getLeft()));
+            node = balanceNode(node);
+        } else {                                            // add element to the right subtree
+            node.setRight(insert(element, node.getRight()));
+            node = balanceNode(node);
         }
-        return balanceNode(node);
+        return node;
     }
 
     @Override
@@ -94,39 +95,50 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
         if (node == null) {
             return null;
         }
-        if (node.getElement().equals(element)) {
-            if (node.getLeft() == null && node.getRight() == null) {
+        if (element.compareTo(node.getElement()) == 0) { // node is the Node to be removed
+
+            if (node.getLeft() == null && node.getRight() == null) { //node is a leaf (has no childs)
                 return null;
             }
-            if (node.getLeft() == null) {
+            if (node.getLeft() == null) {   //has only right child
                 return node.getRight();
             }
-            if (node.getRight() == null) {
+            if (node.getRight() == null) {  //has only left child
                 return node.getLeft();
             }
-            E smallElement = smallestElement(node.getRight());
-            node.setElement(smallElement);
-            node.setRight(remove(smallElement, node.getRight()));
+            //has two child trees
+            //replace the elem with the smallest of right subtree and remove it
+            E smallElem = smallestElement(node.getRight());
+            node.setElement(smallElem);
+            node.setRight(remove(smallElem, node.getRight()));
+            node = balanceNode(node);
+        } else if (element.compareTo(node.getElement()) < 0) {
+            node.setLeft(remove(element, node.getLeft()));
             node = balanceNode(node);
         } else {
-            if (node.getElement().compareTo(element) > 0) {
-                node.setLeft(remove(element, node.getLeft()));
-                node = balanceNode(node);
-            } else {
-                node.setRight(remove(element, node.getRight()));
-                node = balanceNode(node);
-            }
-
+            node.setRight(remove(element, node.getRight()));
+            node = balanceNode(node);
         }
         return node;
     }
 
     public boolean equals(AVL<E> second) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return equals(root, second.root);
     }
 
     public boolean equals(Node<E> root1, Node<E> root2) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        if (root1 == null && root2 == null) {
+            return true;
+        } else if (root1 != null && root2 != null) {
+            if (root1.getElement().compareTo(root2.getElement()) == 0) {
+                return equals(root1.getLeft(), root2.getLeft())
+                        && equals(root1.getRight(), root2.getRight());
+            } else {
+                return false;
+            }
 
+        } else {
+            return false;
+        }
+    }
 }
