@@ -65,6 +65,68 @@ public class App {
         f.lerPoligonos(pol_pref_cent, this);
 
     }
+    //=================================B========================================
+
+    public String construirPoligono(int numlados) {
+        if (numlados <= 0 || numlados >= 1000) {
+            return "";
+        }
+        int centenas = (numlados / 100) * 100;
+        int unidades = numlados % 10;
+        int dezenas = numlados - centenas;
+
+        String expUnidades = "";
+        String expDezenas = "";
+        String expCentenas = "";
+
+        expCentenas = construirNomePolCentenas(centenas);
+        expDezenas = construirNomePolDezenas(dezenas);
+        expUnidades = construirNomePolUnidades(unidades);
+        
+        return expCentenas+expDezenas+expUnidades;
+    }
+
+    private String construirNomePolDezenas(int dezenas) {
+        String temp = "";
+        if (dezenas >= 10 && dezenas <= 29) {
+            for (Poligono p : arvore_dezenas.inOrder()) {
+                if (dezenas == p.getNumLados()) {
+                    temp = p.getPrefixo();
+                }
+            }
+
+        } else {
+            int unidades = dezenas % 10;
+            dezenas = dezenas - unidades;
+            for (Poligono p : arvore_dezenas.inOrder()) {
+                if (dezenas == p.getNumLados()) {
+                    temp = p.getPrefixo();
+                }
+            }
+        }
+        return temp;
+    }
+
+    private String construirNomePolCentenas(int centenas) {
+        String temp = "";
+        for (Poligono p : arvore_centenas.inOrder()) {
+            if (centenas == p.getNumLados()) {
+                temp = p.getPrefixo();
+            }
+        }
+        return temp;
+    }
+    
+    private String construirNomePolUnidades(int unidades){
+            String temp = "";
+        for (Poligono p : arvore_unidades.inOrder()) {
+            if (unidades == p.getNumLados()) {
+                temp = p.getPrefixo()+"gon";
+            }
+        }
+        return temp;
+    
+    }
 
     /**
      * Retorna quantos poligonos das unidades existem
