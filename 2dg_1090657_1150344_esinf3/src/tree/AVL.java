@@ -14,26 +14,52 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
 
     private int balanceFactor(Node<E> node) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        return height(node.getRight()) - height(node.getLeft());
     }
 
     private Node<E> rightRotation(Node<E> node) {
-
-        throw new UnsupportedOperationException("Not supported yet.");
+        Node<E> leftson = node.getLeft();
+        node.setLeft(leftson.getRight());
+        leftson.setRight(node);
+        node = leftson;
+        return node;
     }
 
     private Node<E> leftRotation(Node<E> node) {
-
-        throw new UnsupportedOperationException("Not supported yet.");
+        Node<E> rightson = node.getRight();
+        node.setLeft(rightson.getLeft());
+        rightson.setLeft(node);
+        node = rightson;
+        return node;
     }
 
     private Node<E> twoRotations(Node<E> node) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (balanceFactor(node) < 0) {
+            node.setLeft(leftRotation(node.getLeft()));
+            node = rightRotation(node);
+        } else {
+            node.setRight(rightRotation(node.getRight()));
+            node = leftRotation(node);
+        }
+        return node;
     }
 
     private Node<E> balanceNode(Node<E> node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (balanceFactor(node) < -1) {
+            if (balanceFactor(node.getLeft()) <= 0) {
+                node = rightRotation(node);
+            } else {
+                node = twoRotations(node);
+            }
+        } else if (balanceFactor(node) > 1) {
+            if (balanceFactor(node.getRight()) >= 0) {
+                node = leftRotation(node);
+            } else {
+                node = twoRotations(node);
+            }
+        }
+        return node;
     }
 
     @Override
@@ -42,7 +68,20 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
     }
 
     private Node<E> insert(E element, Node<E> node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (node == null) {
+            return new Node<>(element, null, null);
+        }
+        int compareResult = element.compareTo(node.getElement());
+        if (compareResult == 0) {
+            node.setElement(element);
+        } else {
+            if (compareResult < 0) {
+                node.setLeft(insert(element, node.getLeft()));
+            } else if (compareResult > 0) {
+                node.setRight(insert(element, node.getRight()));
+            }
+        }
+        return balanceNode(node);
     }
 
     @Override
