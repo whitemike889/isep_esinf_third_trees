@@ -13,7 +13,6 @@ package tree;
 public class AVL<E extends Comparable<E>> extends BST<E> {
 
     private int balanceFactor(Node<E> node) {
-
         return height(node.getRight()) - height(node.getLeft());
     }
 
@@ -69,7 +68,7 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
 
     private Node<E> insert(E element, Node<E> node) {
         if (node == null) {
-            return new Node<>(element, null, null);
+            return new Node(element, null, null);
         }
         int compareResult = element.compareTo(node.getElement());
         if (compareResult == 0) {
@@ -77,8 +76,10 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
         } else {
             if (compareResult < 0) {
                 node.setLeft(insert(element, node.getLeft()));
+                node = balanceNode(node);
             } else if (compareResult > 0) {
                 node.setRight(insert(element, node.getRight()));
+                node = balanceNode(node);
             }
         }
         return balanceNode(node);
