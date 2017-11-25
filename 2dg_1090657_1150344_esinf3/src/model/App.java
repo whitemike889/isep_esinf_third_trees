@@ -260,7 +260,7 @@ public class App {
      *
      * @param lim_inf limite inferior
      * @param lim_sup limite superior
-     * @return Uma árvore com todos os polígonos de 1 a 999
+     * @return Uma árvore com todos os polígonos de lim_inf a lim_sup
      */
     public ArvorePoligonos construirArvorePoligonosRange(int lim_inf, int lim_sup) {
         ArvorePoligonos arvore = new ArvorePoligonos();
