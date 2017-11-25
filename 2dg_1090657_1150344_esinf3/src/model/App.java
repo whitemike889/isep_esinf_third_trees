@@ -239,6 +239,22 @@ public class App {
     }
 
     /**
+     * Método para testar lowestCommonAncestor
+     *
+     * @param arvore_test Árvore a testar
+     * @param poligono1 Poligono 1
+     * @param poligono2 Poligono 2
+     * @return
+     */
+    public Poligono lowestCommonAncestorTest(ArvorePoligonos arvore_test, String poligono1, String poligono2) {
+
+        Poligono p1 = new Poligono(numeroLados(poligono1), poligono1);
+        Poligono p2 = new Poligono(numeroLados(poligono2), poligono2);
+        Poligono antecessor = arvore_test.lowestCommonAncestor(p1, p2);
+        return antecessor;
+    }
+
+    /**
      * Retorna quantos poligonos das unidades existem
      *
      * @return
@@ -273,5 +289,23 @@ public class App {
     public int qtdPoligonosTotal() {
         return arvore_unidades.size() + arvore_dezenas.size() + arvore_centenas.size();
 
+    }
+
+    /**
+     * Método para teste do common ancestor Constrói a árvore total de polígonos
+     * de limite inferior a limite superior
+     *
+     * @param lim_inf limite inferior
+     * @param lim_sup limite superior
+     * @return Uma árvore com todos os polígonos de 1 a 999
+     */
+    public ArvorePoligonos construirArvorePoligonosRange(int lim_inf, int lim_sup) {
+        ArvorePoligonos arvore = new ArvorePoligonos();
+        for (int i = lim_inf; i <= lim_sup; i++) {
+            String s = construirNomeDoPoligono(i);
+            Poligono p = new Poligono(i, s);
+            arvore.insert(p);
+        }
+        return arvore;
     }
 }
