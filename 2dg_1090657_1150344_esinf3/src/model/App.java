@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import tree.AVL;
 import tree.ArvorePoligonos;
 
 /**
@@ -25,6 +28,11 @@ public class App {
      * Árvore das centenas
      */
     private ArvorePoligonos arvore_centenas;
+
+    /**
+     * Árvore construida
+     */
+    private ArvorePoligonos arvore_total;
 
     private static final String pol_pref_uni = "poligonos_prefixo_unidades.txt";
     private static final String pol_pref_dez = "poligonos_prefixo_dezenas.txt";
@@ -102,7 +110,7 @@ public class App {
             return expCentenas + expDezenas + "gon";
         }
 
-        return expCentenas + expDezenas + expUnidades;
+        return expCentenas + expDezenas + expUnidades + "gon";
     }
 
     /**
@@ -152,7 +160,12 @@ public class App {
     }
     //=================================C========================================
 
-    public ArvorePoligonos construirArvorePoligonos() {
+    /**
+     * Constrói a árvore total de polígonos de 1 a 999
+     *
+     * @return Uma árvore com todos os polígonos de 1 a 999
+     */
+    public ArvorePoligonos construirArvorePoligonosTotal() {
         ArvorePoligonos arvore = new ArvorePoligonos();
         final int LIM_INF = 1, LIM_SUP = 999;
         for (int i = LIM_INF; i <= LIM_SUP; i++) {
@@ -160,7 +173,71 @@ public class App {
             Poligono p = new Poligono(i, temp);
             arvore.insert(p);
         }
+        arvore_total = arvore;
         return arvore;
+    }
+    //=================================D========================================
+
+    /**
+     * Método que retorna o numero de lados fe um poligono a partir do nome.
+     *
+     * @param nome Nome do poligono
+     * @return numero de lados do poligono
+     */
+    public int numeroLados(String nome) {
+        if (arvore_total == null) {
+            arvore_total = construirArvorePoligonosTotal();
+        }
+        for (Poligono p : arvore_total.inOrder()) {
+            if (p.getPrefixo().equals(nome)) {
+                return p.getNumLados();
+            }
+        }
+        return 0;
+    }
+
+    //=================================E========================================
+    /**
+     * Método que retorna o nome dos poligonos no intervalo definido em ordem
+     * decrescente.
+     *
+     * @param x1 Primeiro numero do intervalo
+     * @param x2 Segundo numero do intervalo
+     * @return Lista dos nomes dos poligonos no intervalo pretendido em ordem
+     * decrescente
+     */
+    public Iterable<String> poligonosIntervalo(int x1, int x2) {
+        ArrayList<String> nomesPoligonos = new ArrayList<>();
+        if (arvore_total == null) {
+            arvore_total = construirArvorePoligonosTotal();
+        }
+        for (Poligono p : arvore_total.inOrder()) {
+            if (p.getNumLados() >= x1 && p.getNumLados() < x2) {
+                nomesPoligonos.add(p.getPrefixo());
+            } else if (p.getNumLados() >= x2 && p.getNumLados() < x1) {
+                nomesPoligonos.add(p.getPrefixo());
+            }
+        }
+        Collections.reverse(nomesPoligonos);
+        return nomesPoligonos;
+    }
+
+    //=================================F========================================
+    /**
+     * Retorna o antecessor comum mais próximo de dois poligonos
+     *
+     * @param poligono1 Nome de um poligono
+     * @param poligono2 Nome de outro poligono
+     * @return Antecessor comum mais próximo
+     */
+    public Poligono lowestCommonAncestor(String poligono1, String poligono2) {
+        if (arvore_total == null) {
+            arvore_total = construirArvorePoligonosTotal();
+        }
+        Poligono p1 = new Poligono(numeroLados(poligono1), poligono1);
+        Poligono p2 = new Poligono(numeroLados(poligono2), poligono2);
+        Poligono antecessor = arvore_total.lowestCommonAncestor(p1, p2);
+        return antecessor;
     }
 
     /**

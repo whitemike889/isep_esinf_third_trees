@@ -32,6 +32,18 @@ public class Poligono implements Comparable<Poligono> {
         return Integer.compare(num_lados, o.num_lados);
     }
 
+    public int compareToString(Poligono o) {
+        if (o.prefixo.contains(prefixo)) {
+            return 0;
+        }
+        if (this.prefixo.compareTo(o.prefixo) < 0) {
+            return -1;
+        } else {
+            return 1;
+        }
+
+    }
+
     @Override
     public String toString() {
         return "{Lados:" + num_lados + " Prefixo:" + prefixo + "}";

@@ -141,4 +141,21 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
             return false;
         }
     }
+
+    public E lowestCommonAncestor(E el1, E el2) {
+        return lowestCommonAncestor(root, el1, el2);
+    }
+
+    private E lowestCommonAncestor(Node<E> node, E el1, E el2) {
+        if (node == null) {
+            return null;
+        }
+        if (node.getElement().compareTo(el1) > 0 && node.getElement().compareTo(el2) > 0) {
+            return lowestCommonAncestor(node.getLeft(), el1, el2);
+        }
+        if (node.getElement().compareTo(el1) < 0 && node.getElement().compareTo(el2) < 0) {
+            return lowestCommonAncestor(node.getRight(), el1, el2);
+        }
+        return node.getElement();
+    }
 }

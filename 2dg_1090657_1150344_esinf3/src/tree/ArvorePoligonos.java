@@ -34,29 +34,6 @@ public class ArvorePoligonos extends AVL<Poligono> {
         return null;
     }
 
-    public int procurarNumLadosPoligonoPorNome(String nome) {
-
-        int num = procurarNumLadosPoligonoPorNome(nome, root);
-        return num;
-    }
-
-    private int procurarNumLadosPoligonoPorNome(String nome, Node<Poligono> node) {
-        if (node == null) {
-            return -1;
-        }
-
-        int cmp = nome.compareTo(node.getElement().getPrefixo());
-
-        if (cmp == 0) {
-            return node.getElement().getNumLados();
-        }
-        if (cmp < 0) {
-            return procurarNumLadosPoligonoPorNome(nome, node.getLeft());
-        } else {
-            return procurarNumLadosPoligonoPorNome(nome, node.getRight());
-        }
-    }
-
     public boolean procurarSePoligonoExiste(Poligono p) {
         return procurarSePoligonoExiste(p, root);
     }
@@ -73,6 +50,7 @@ public class ArvorePoligonos extends AVL<Poligono> {
             return procurarSePoligonoExiste(p, node.getLeft());
         } else {
             return procurarSePoligonoExiste(p, node.getRight());
+
         }
     }
 }
