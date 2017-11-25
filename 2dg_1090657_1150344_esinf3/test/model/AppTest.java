@@ -139,11 +139,11 @@ public class AppTest {
         instance.lerDados();
         ArrayList<String> poligonos = (ArrayList<String>) instance.poligonosIntervalo(56, 827);
         int index = 0;
-        assertEquals("Existem 771 poligonos de intervalo entre 56 e 827", poligonos.size(), 771);
-        assertEquals("O index do octahectaicosihexagon é 0", index, poligonos.indexOf("octahectaicosihexagon"));
-        index = 826 - 432;
-        assertEquals("O index do tetrahectatriacontadigon é 394", index, poligonos.indexOf("tetrahectatriacontadigon"));
-        index = 826 - 219;
+        assertEquals("Existem 772 poligonos de intervalo entre 56 e 827", poligonos.size(), 772);
+        assertEquals("O index do octahectaicosiheptagon é 0", index, poligonos.indexOf("octahectaicosiheptagon"));
+        index = 432;
+        assertEquals("O index do trihectaenneacontapentagon é 432", index, poligonos.indexOf("trihectaenneacontapentagon"));
+        index = 827 - 219;
         assertEquals("O index do dihectaenneakaidecagon é 0", index, poligonos.indexOf("dihectaenneakaidecagon"));
     }
 

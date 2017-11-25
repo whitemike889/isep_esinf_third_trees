@@ -210,9 +210,9 @@ public class App {
             arvore_total = construirArvorePoligonosTotal();
         }
         for (Poligono p : arvore_total.inOrder()) {
-            if (p.getNumLados() >= x1 && p.getNumLados() < x2) {
+            if (p.getNumLados() >= x1 && p.getNumLados() <= x2) {
                 nomesPoligonos.add(p.getPrefixo());
-            } else if (p.getNumLados() >= x2 && p.getNumLados() < x1) {
+            } else if (p.getNumLados() >= x2 && p.getNumLados() <= x1) {
                 nomesPoligonos.add(p.getPrefixo());
             }
         }
