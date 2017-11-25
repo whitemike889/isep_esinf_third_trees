@@ -7,7 +7,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import tree.AVL;
 import tree.ArvorePoligonos;
 
 /**
@@ -169,17 +168,16 @@ public class App {
         ArvorePoligonos arvore = new ArvorePoligonos();
         final int LIM_INF = 1, LIM_SUP = 999;
         for (int i = LIM_INF; i <= LIM_SUP; i++) {
-            String temp = construirNomeDoPoligono(i);
-            Poligono p = new Poligono(i, temp);
+            String s = construirNomeDoPoligono(i);
+            Poligono p = new Poligono(i, s);
             arvore.insert(p);
         }
-        arvore_total = arvore;
         return arvore;
     }
     //=================================D========================================
 
     /**
-     * Método que retorna o numero de lados fe um poligono a partir do nome.
+     * Método que retorna o numero de lados de um poligono a partir do nome.
      *
      * @param nome Nome do poligono
      * @return numero de lados do poligono
