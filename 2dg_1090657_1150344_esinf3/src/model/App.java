@@ -255,6 +255,24 @@ public class App {
     }
 
     /**
+     * Método para teste que Constrói uma árvore de polígonos
+     * de limite inferior a limite superior
+     *
+     * @param lim_inf limite inferior
+     * @param lim_sup limite superior
+     * @return Uma árvore com todos os polígonos de 1 a 999
+     */
+    public ArvorePoligonos construirArvorePoligonosRange(int lim_inf, int lim_sup) {
+        ArvorePoligonos arvore = new ArvorePoligonos();
+        for (int i = lim_inf; i <= lim_sup; i++) {
+            String s = construirNomeDoPoligono(i);
+            Poligono p = new Poligono(i, s);
+            arvore.insert(p);
+        }
+        return arvore;
+    }
+
+    /**
      * Retorna quantos poligonos das unidades existem
      *
      * @return
@@ -291,21 +309,4 @@ public class App {
 
     }
 
-    /**
-     * Método para teste do common ancestor Constrói a árvore total de polígonos
-     * de limite inferior a limite superior
-     *
-     * @param lim_inf limite inferior
-     * @param lim_sup limite superior
-     * @return Uma árvore com todos os polígonos de 1 a 999
-     */
-    public ArvorePoligonos construirArvorePoligonosRange(int lim_inf, int lim_sup) {
-        ArvorePoligonos arvore = new ArvorePoligonos();
-        for (int i = lim_inf; i <= lim_sup; i++) {
-            String s = construirNomeDoPoligono(i);
-            Poligono p = new Poligono(i, s);
-            arvore.insert(p);
-        }
-        return arvore;
-    }
 }
