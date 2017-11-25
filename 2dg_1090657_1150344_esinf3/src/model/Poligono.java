@@ -5,8 +5,6 @@
  */
 package model;
 
-import java.util.Objects;
-
 /**
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>

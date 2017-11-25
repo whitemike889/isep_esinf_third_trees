@@ -5,7 +5,7 @@
  */
 package model;
 
-import tree.AVL;
+import tree.ArvorePoligonos;
 
 /**
  *
@@ -13,18 +13,27 @@ import tree.AVL;
  */
 public class App {
 
-    private AVL<Poligono> arvore_unidades;
-    private AVL<Poligono> arvore_dezenas;
-    private AVL<Poligono> arvore_centenas;
+    /**
+     * Árvore das unidades
+     */
+    private ArvorePoligonos arvore_unidades;
+    /**
+     * Árvore das dezenas
+     */
+    private ArvorePoligonos arvore_dezenas;
+    /**
+     * Árvore das centenas
+     */
+    private ArvorePoligonos arvore_centenas;
 
     private static final String pol_pref_uni = "poligonos_prefixo_unidades.txt";
     private static final String pol_pref_dez = "poligonos_prefixo_dezenas.txt";
     private static final String pol_pref_cent = "poligonos_prefixo_centenas.txt";
 
     public App() {
-        arvore_unidades = new AVL<>();
-        arvore_dezenas = new AVL<>();
-        arvore_centenas = new AVL<>();
+        arvore_unidades = new ArvorePoligonos();
+        arvore_dezenas = new ArvorePoligonos();
+        arvore_centenas = new ArvorePoligonos();
     }
 
     /**
@@ -65,9 +74,15 @@ public class App {
         f.lerPoligonos(pol_pref_cent, this);
 
     }
-    //=================================B========================================
 
-    public String construirPoligono(int numlados) {
+    //=================================B========================================
+    /**
+     * Método que constrói um nome de um polígono dado o número de lados
+     *
+     * @param numlados Num de lados de um poligono
+     * @return Nome de um poligono
+     */
+    public String construirNomeDoPoligono(int numlados) {
         if (numlados <= 0 || numlados >= 1000) {
             return "";
         }
@@ -82,53 +97,70 @@ public class App {
         expCentenas = construirNomePolCentenas(centenas);
         expDezenas = construirNomePolDezenas(dezenas);
         expUnidades = construirNomePolUnidades(unidades);
-        
-        if(dezenas >= 10 && dezenas <= 29)
-            return expCentenas+expDezenas+"gon";
-        
-        return expCentenas+expDezenas+expUnidades;
+
+        if (dezenas >= 10 && dezenas <= 29) {
+            return expCentenas + expDezenas + "gon";
+        }
+
+        return expCentenas + expDezenas + expUnidades;
     }
 
+    /**
+     * Método que constrói o nome das unidades de um poligono dado o campo das
+     * unidades
+     *
+     * @param unidades Num de lados das unidades de um poligono
+     * @return Nome do campo das unidades de um poligono
+     */
+    private String construirNomePolUnidades(int unidades) {
+        String temp = "";
+        temp = arvore_unidades.procurarNomePoligonoPorNumero(unidades);
+        return temp;
+
+    }
+
+    /**
+     * Método que constrói o nome das dezenas de um poligono dado o campo das
+     * dezenas
+     *
+     * @param dezenas Num de lados nas dezenas de um poligono
+     * @return Nome do campo das dezenas de um poligono
+     */
     private String construirNomePolDezenas(int dezenas) {
         String temp = "";
         if (dezenas >= 10 && dezenas <= 29) {
-            for (Poligono p : arvore_dezenas.inOrder()) {
-                if (dezenas == p.getNumLados()) {
-                    temp = p.getPrefixo();
-                }
-            }
-
+            temp = arvore_dezenas.procurarNomePoligonoPorNumero(dezenas);
         } else {
             int unidades = dezenas % 10;
             dezenas = dezenas - unidades;
-            for (Poligono p : arvore_dezenas.inOrder()) {
-                if (dezenas == p.getNumLados()) {
-                    temp = p.getPrefixo();
-                }
-            }
+            temp = arvore_dezenas.procurarNomePoligonoPorNumero(dezenas);
         }
         return temp;
     }
 
+    /**
+     * Método que constrói o nome das dezenas de um poligono dado o campo das
+     * centenas
+     *
+     * @param centenas Num lados nas centenas de um poligono
+     * @return Nome do campo das centenas de um poligono
+     */
     private String construirNomePolCentenas(int centenas) {
         String temp = "";
-        for (Poligono p : arvore_centenas.inOrder()) {
-            if (centenas == p.getNumLados()) {
-                temp = p.getPrefixo();
-            }
-        }
+        temp = arvore_centenas.procurarNomePoligonoPorNumero(centenas);
         return temp;
     }
-    
-    private String construirNomePolUnidades(int unidades){
-            String temp = "";
-        for (Poligono p : arvore_unidades.inOrder()) {
-            if (unidades == p.getNumLados()) {
-                temp = p.getPrefixo()+"gon";
-            }
+    //=================================C========================================
+
+    public ArvorePoligonos construirArvorePoligonos() {
+        ArvorePoligonos arvore = new ArvorePoligonos();
+        final int LIM_INF = 1, LIM_SUP = 999;
+        for (int i = LIM_INF; i <= LIM_SUP; i++) {
+            String temp = construirNomeDoPoligono(i);
+            Poligono p = new Poligono(i, temp);
+            arvore.insert(p);
         }
-        return temp;
-    
+        return arvore;
     }
 
     /**
