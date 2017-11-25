@@ -144,7 +144,7 @@ public class AppTest {
         index = 432;
         assertEquals("O index do trihectaenneacontapentagon é 432", index, poligonos.indexOf("trihectaenneacontapentagon"));
         index = 827 - 219;
-        assertEquals("O index do dihectaenneakaidecagon é 0", index, poligonos.indexOf("dihectaenneakaidecagon"));
+        assertEquals("O index do dihectaenneakaidecagon é 608", index, poligonos.indexOf("dihectaenneakaidecagon"));
     }
 
     /**
