@@ -9,12 +9,12 @@ package model;
  *
  * @author Raúl Correia <1090657@isep.ipp.pt>
  */
-public class Poligono implements Comparable<Poligono> {
+public class PoligonoString implements Comparable<PoligonoString> {
 
     private int num_lados;
     private String prefixo;
 
-    public Poligono(int num_lados, String prefixo) {
+    public PoligonoString(int num_lados, String prefixo) {
         this.num_lados = num_lados;
         this.prefixo = prefixo;
     }
@@ -25,11 +25,6 @@ public class Poligono implements Comparable<Poligono> {
 
     public String getPrefixo() {
         return prefixo;
-    }
-
-    @Override
-    public int compareTo(Poligono o) {
-        return Integer.compare(num_lados, o.num_lados);
     }
 
     @Override
@@ -48,11 +43,16 @@ public class Poligono implements Comparable<Poligono> {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Poligono other = (Poligono) obj;
+        final PoligonoString other = (PoligonoString) obj;
         if (this.num_lados != other.num_lados) {
             return false;
         }
         return prefixo.equals(other.prefixo);
+    }
+
+    @Override
+    public int compareTo(PoligonoString o) {
+        return this.prefixo.compareTo(o.prefixo);
     }
 
 }

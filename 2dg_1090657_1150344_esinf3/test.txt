@@ -1,0 +1,63 @@
+|	|	|	|	|-------{Lados:13 Prefixo:triskaidecagon}
+|	|	|	|-------{Lados:3 Prefixo:trigon}
+|	|	|	|	|-------{Lados:33 Prefixo:triacontatrigon}
+|	|	|-------{Lados:34 Prefixo:triacontatetragon}
+|	|	|	|	|-------{Lados:35 Prefixo:triacontapentagon}
+|	|	|	|	|	|-------{Lados:38 Prefixo:triacontaoctagon}
+|	|	|	|-------{Lados:36 Prefixo:triacontahexagon}
+|	|	|	|	|	|-------{Lados:37 Prefixo:triacontaheptagon}
+|	|	|	|	|-------{Lados:31 Prefixo:triacontahenagon}
+|	|-------{Lados:30 Prefixo:triacontagon}
+|	|	|	|	|	|-------{Lados:39 Prefixo:triacontaenneagon}
+|	|	|	|	|-------{Lados:32 Prefixo:triacontadigon}
+|	|	|	|	|	|-------{Lados:14 Prefixo:tetrakaidecagon}
+|	|	|	|-------{Lados:4 Prefixo:tetragon}
+|	|	|	|	|-------{Lados:43 Prefixo:tetracontatrigon}
+|	|	|-------{Lados:44 Prefixo:tetracontatetragon}
+|	|	|	|	|-------{Lados:45 Prefixo:tetracontapentagon}
+|	|	|	|	|	|-------{Lados:48 Prefixo:tetracontaoctagon}
+|	|	|	|-------{Lados:46 Prefixo:tetracontahexagon}
+|	|	|	|	|	|-------{Lados:47 Prefixo:tetracontaheptagon}
+|	|	|	|	|-------{Lados:41 Prefixo:tetracontahenagon}
+|-------{Lados:40 Prefixo:tetracontagon}
+|	|	|	|	|-------{Lados:49 Prefixo:tetracontaenneagon}
+|	|	|	|-------{Lados:42 Prefixo:tetracontadigon}
+|	|	|-------{Lados:15 Prefixo:pentakaidecagon}
+|	|	|	|-------{Lados:5 Prefixo:pentagon}
+|	|-------{Lados:53 Prefixo:pentacontatrigon}
+|	|	|	|	|	|-------{Lados:54 Prefixo:pentacontatetragon}
+|	|	|	|	|-------{Lados:55 Prefixo:pentacontapentagon}
+|	|	|	|	|	|-------{Lados:58 Prefixo:pentacontaoctagon}
+|	|	|	|-------{Lados:56 Prefixo:pentacontahexagon}
+|	|	|	|	|-------{Lados:57 Prefixo:pentacontaheptagon}
+|	|	|	|	|	|-------{Lados:51 Prefixo:pentacontahenagon}
+|	|	|-------{Lados:50 Prefixo:pentacontagon}
+|	|	|	|	|-------{Lados:59 Prefixo:pentacontaenneagon}
+|	|	|	|-------{Lados:52 Prefixo:pentacontadigon}
+|	|	|	|	|-------{Lados:18 Prefixo:octakaidecagon}
+{Lados:8 Prefixo:octagon}
+|	|	|	|	|-------{Lados:23 Prefixo:icositrigon}
+|	|	|	|-------{Lados:24 Prefixo:icositetragon}
+|	|	|-------{Lados:25 Prefixo:icosipentagon}
+|	|	|	|	|-------{Lados:28 Prefixo:icosioctagon}
+|	|	|	|-------{Lados:26 Prefixo:icosihexagon}
+|	|	|	|	|-------{Lados:27 Prefixo:icosiheptagon}
+|	|-------{Lados:21 Prefixo:icosihenagon}
+|	|	|	|	|-------{Lados:29 Prefixo:icosienneagon}
+|	|	|	|-------{Lados:22 Prefixo:icosidigon}
+|	|	|-------{Lados:20 Prefixo:icosagon}
+|	|	|	|-------{Lados:16 Prefixo:hexakaidecagon}
+|-------{Lados:6 Prefixo:hexagon}
+|	|	|	|	|	|-------{Lados:63 Prefixo:hexacontatrigon}
+|	|	|	|	|-------{Lados:61 Prefixo:hexacontahenagon}
+|	|	|	|-------{Lados:60 Prefixo:hexacontagon}
+|	|	|	|	|-------{Lados:62 Prefixo:hexacontadigon}
+|	|	|-------{Lados:17 Prefixo:heptakaidecagon}
+|	|	|	|-------{Lados:7 Prefixo:heptagon}
+|	|	|	|	|-------{Lados:11 Prefixo:hendecagon}
+|	|-------{Lados:1 Prefixo:henagon}
+|	|	|	|	|-------{Lados:19 Prefixo:enneakaidecagon}
+|	|	|	|-------{Lados:9 Prefixo:enneagon}
+|	|	|	|	|-------{Lados:12 Prefixo:dodecagon}
+|	|	|-------{Lados:2 Prefixo:digon}
+|	|	|	|-------{Lados:10 Prefixo:decagon}

@@ -7,7 +7,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import tree.ArvorePoligonos;
+import tree.ArvorePoligonosPorNome;
 
 /**
  *
@@ -31,7 +33,7 @@ public class App {
     /**
      * Árvore construida
      */
-    private ArvorePoligonos arvore_total;
+    private ArvorePoligonosPorNome arvore_poligonos_por_nome;
 
     private static final String pol_pref_uni = "poligonos_prefixo_unidades.txt";
     private static final String pol_pref_dez = "poligonos_prefixo_dezenas.txt";
@@ -164,12 +166,12 @@ public class App {
      *
      * @return Uma árvore com todos os polígonos de 1 a 999
      */
-    public ArvorePoligonos construirArvorePoligonosTotal() {
-        ArvorePoligonos arvore = new ArvorePoligonos();
+    public ArvorePoligonosPorNome construirArvorePoligonosTotal() {
+        ArvorePoligonosPorNome arvore = new ArvorePoligonosPorNome();
         final int LIM_INF = 1, LIM_SUP = 999;
         for (int i = LIM_INF; i <= LIM_SUP; i++) {
             String s = construirNomeDoPoligono(i);
-            Poligono p = new Poligono(i, s);
+            PoligonoString p = new PoligonoString(i, s);
             arvore.insert(p);
         }
         return arvore;
@@ -183,15 +185,10 @@ public class App {
      * @return numero de lados do poligono
      */
     public int numeroLados(String nome) {
-        if (arvore_total == null) {
-            arvore_total = construirArvorePoligonosTotal();
+        if (arvore_poligonos_por_nome == null) {
+            arvore_poligonos_por_nome = construirArvorePoligonosTotal();
         }
-        for (Poligono p : arvore_total.inOrder()) {
-            if (p.getPrefixo().equals(nome)) {
-                return p.getNumLados();
-            }
-        }
-        return 0;
+        return arvore_poligonos_por_nome.procurarNumLadosPoligonosPorNome(nome);
     }
 
     //=================================E========================================
@@ -205,22 +202,23 @@ public class App {
      * decrescente
      */
     public Iterable<String> poligonosIntervalo(int x1, int x2) {
-        ArrayList<String> nomesPoligonos = new ArrayList<>();
-        if (arvore_total == null) {
-            arvore_total = construirArvorePoligonosTotal();
+        LinkedList<String> listaPoligonos = new LinkedList<>();
+        if (arvore_poligonos_por_nome == null) {
+            arvore_poligonos_por_nome = construirArvorePoligonosTotal();
         }
-        for (Poligono p : arvore_total.inOrder()) {
-            if (p.getNumLados() >= x1 && p.getNumLados() <= x2) {
-                nomesPoligonos.add(p.getPrefixo());
-            } else if (p.getNumLados() >= x2 && p.getNumLados() <= x1) {
-                nomesPoligonos.add(p.getPrefixo());
-            }
+        int lim_inf = x1;
+        int lim_sup = x2;
+        if (x1 > x2) {
+            lim_inf = x2;
+            lim_sup = x1;
         }
-        Collections.reverse(nomesPoligonos);
-        return nomesPoligonos;
+        for (int i = lim_inf; i <= lim_sup; i++) {
+            listaPoligonos.push(construirNomeDoPoligono(i));
+        }
+        return listaPoligonos;
     }
 
-    //=================================F========================================
+//=================================F========================================
     /**
      * Retorna o antecessor comum mais próximo de dois poligonos
      *
@@ -228,13 +226,13 @@ public class App {
      * @param poligono2 Nome de outro poligono
      * @return Antecessor comum mais próximo
      */
-    public Poligono lowestCommonAncestor(String poligono1, String poligono2) {
-        if (arvore_total == null) {
-            arvore_total = construirArvorePoligonosTotal();
+    public PoligonoString lowestCommonAncestor(String poligono1, String poligono2) {
+        if (arvore_poligonos_por_nome == null) {
+            arvore_poligonos_por_nome = construirArvorePoligonosTotal();
         }
-        Poligono p1 = new Poligono(numeroLados(poligono1), poligono1);
-        Poligono p2 = new Poligono(numeroLados(poligono2), poligono2);
-        Poligono antecessor = arvore_total.lowestCommonAncestor(p1, p2);
+        PoligonoString p1 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono1);
+        PoligonoString p2 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono2);
+        PoligonoString antecessor = arvore_poligonos_por_nome.lowestCommonAncestor(p1, p2);
         return antecessor;
     }
 
@@ -246,17 +244,17 @@ public class App {
      * @param poligono2 Poligono 2
      * @return
      */
-    public Poligono lowestCommonAncestorTest(ArvorePoligonos arvore_test, String poligono1, String poligono2) {
+    public PoligonoString lowestCommonAncestorTest(ArvorePoligonosPorNome arvore_test, String poligono1, String poligono2) {
 
-        Poligono p1 = new Poligono(numeroLados(poligono1), poligono1);
-        Poligono p2 = new Poligono(numeroLados(poligono2), poligono2);
-        Poligono antecessor = arvore_test.lowestCommonAncestor(p1, p2);
+        PoligonoString p1 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono1);
+        PoligonoString p2 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono2);
+        PoligonoString antecessor = arvore_test.lowestCommonAncestor(p1, p2);
         return antecessor;
     }
 
     /**
-     * Método para teste que Constrói uma árvore de polígonos
-     * de limite inferior a limite superior
+     * Método para teste que Constrói uma árvore de polígonos de limite inferior
+     * a limite superior
      *
      * @param lim_inf limite inferior
      * @param lim_sup limite superior
