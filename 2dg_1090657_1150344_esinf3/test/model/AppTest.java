@@ -15,8 +15,17 @@ import tree.AVL;
  */
 public class AppTest {
 
+    private List<String> listaNomePoligonos;
+    private List<Integer> listaNumLados;
+
+    private static final int TIPO_TEST_NOME_LADO = 0;
+    private static final int TIPO_TEST_LADO_NOME = 1;
     private static final String FX_NOME_LADOS = "teste_nome_lados.txt";
     private static final String FX_LADOS_NOMES = "teste_lados_nome.txt";
+
+    public AppTest() {
+
+    }
 
     /**
      * Test of lerDados method, of class App.
@@ -26,16 +35,13 @@ public class AppTest {
         System.out.println("lerDados");
         App instance = new App();
         instance.lerDados();
-        instance.construirArvorePoligonosTotal();
         final int qtdUnidades = 9;
         final int qtdDezenas = 27;
         final int qtdCentenas = 9;
-        final int qtdTotal = 999;
         assertEquals("Numero de poligonos Unidades deve ser 9", instance.qtdPoligonosUnidades(), qtdUnidades);
         assertEquals("Numero de poligonos Dezenas deve ser 27", instance.qtdPoligonosDezenas(), qtdDezenas);
         assertEquals("Numero de poligonos Centenas deve ser 9", instance.qtdPoligonosCentenas(), qtdCentenas);
 
-        assertEquals("O total de poligonos criados deve ser 45", instance.qtdPoligonosTotal(), qtdTotal);
     }
 
     /**
@@ -99,18 +105,7 @@ public class AppTest {
         App app = new App();
         app.lerDados();
         app.construirArvorePoligonosTotal();
-
-        Ficheiro f = new Ficheiro();
-        List<String> lista = f.lerFicheiro(AppTest.FX_LADOS_NOMES);
-
-        List<String> listaNomePoligonos = new ArrayList<>();
-        List<Integer> listaNumLados = new ArrayList<>();
-        for (String s : lista) {
-            String ls[] = s.split(";");
-            listaNomePoligonos.add(ls[1]);
-            listaNumLados.add(Integer.parseInt(ls[0]));
-        }
-
+        lerFicheirosTeste(TIPO_TEST_NOME_LADO, FX_NOME_LADOS);
         for (int i = 0; i < listaNumLados.size(); i++) {
             assertTrue("O nome do poligono corresponde ao lado", app.construirNomeDoPoligono(listaNumLados.get(i)).equals(listaNomePoligonos.get(i)));
         }
@@ -123,17 +118,7 @@ public class AppTest {
         App app = new App();
         app.lerDados();
         app.construirArvorePoligonosTotal();
-
-        Ficheiro f = new Ficheiro();
-        List<String> lista = f.lerFicheiro(AppTest.FX_NOME_LADOS);
-
-        List<String> listaNomePoligonos = new ArrayList<>();
-        List<Integer> listaNumLados = new ArrayList<>();
-        for (String s : lista) {
-            String ls[] = s.split(";");
-            listaNomePoligonos.add(ls[0]);
-            listaNumLados.add(Integer.parseInt(ls[1]));
-        }
+        lerFicheirosTeste(TIPO_TEST_LADO_NOME, FX_LADOS_NOMES);
         for (int i = 0; i < listaNomePoligonos.size(); i++) {
             assertTrue("O nome do poligono corresponde ao lado", app.numeroLados(listaNomePoligonos.get(i)) == listaNumLados.get(i));
         }
@@ -192,5 +177,23 @@ public class AppTest {
         p_esperado = new Poligono(8, instance.construirNomeDoPoligono(8));
         assertEquals("O poligono antessessor comum mais proximo é o 'tetracontaoctagon'", p_esperado, instance.lowestCommonAncestorTest(avr, p1, p2));
 
+    }
+
+    private void lerFicheirosTeste(int tipo_test, String nomeFicheiro) {
+        int ORDEM_NOME = 0, ORDEM_LADO = 1;
+        if (tipo_test == 1) {
+            ORDEM_NOME++;
+            ORDEM_LADO--;
+        }
+        Ficheiro f = new Ficheiro();
+        List<String> lista = f.lerFicheiro(nomeFicheiro);
+
+        listaNomePoligonos = new ArrayList<>();
+        listaNumLados = new ArrayList<>();
+        for (String s : lista) {
+            String ls[] = s.split(";");
+            listaNomePoligonos.add(ls[ORDEM_NOME]);
+            listaNumLados.add(Integer.parseInt(ls[ORDEM_LADO]));
+        }
     }
 }

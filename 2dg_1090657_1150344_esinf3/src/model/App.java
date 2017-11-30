@@ -37,9 +37,9 @@ public class App {
      */
     private AVL<Poligono> arvore_poligonos_por_lado;
 
-    private static final String pol_pref_uni = "poligonos_prefixo_unidades.txt";
-    private static final String pol_pref_dez = "poligonos_prefixo_dezenas.txt";
-    private static final String pol_pref_cent = "poligonos_prefixo_centenas.txt";
+    private static final String FICH_POL_UNIDADES = "poligonos_prefixo_unidades.txt";
+    private static final String FICH_POL_DEZENAS = "poligonos_prefixo_dezenas.txt";
+    private static final String FICH_POL_CENTENAS = "poligonos_prefixo_centenas.txt";
 
     public App() {
         arvore_unidades = new AVL<>();
@@ -80,9 +80,9 @@ public class App {
      */
     public void lerDados() {
         Ficheiro f = new Ficheiro();
-        f.lerPoligonos(pol_pref_uni, this);
-        f.lerPoligonos(pol_pref_dez, this);
-        f.lerPoligonos(pol_pref_cent, this);
+        f.lerPoligonos(FICH_POL_UNIDADES, this);
+        f.lerPoligonos(FICH_POL_DEZENAS, this);
+        f.lerPoligonos(FICH_POL_CENTENAS, this);
 
     }
 
@@ -186,7 +186,6 @@ public class App {
     /**
      * Constrói a árvore total de polígonos de 1 a 999
      *
-     * @return Uma árvore com todos os polígonos de 1 a 999
      */
     public void construirArvorePoligonosTotal() {
         AVL<Poligono> arv_pol_lado = new AVL<>();
