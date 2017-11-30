@@ -28,10 +28,11 @@ public class AppTest {
         System.out.println("lerDados");
         App instance = new App();
         instance.lerDados();
+        instance.construirArvorePoligonosTotal();
         final int qtdUnidades = 9;
         final int qtdDezenas = 27;
         final int qtdCentenas = 9;
-        final int qtdTotal = qtdUnidades + qtdDezenas + qtdCentenas;
+        final int qtdTotal = 999;
         assertEquals("Numero de poligonos Unidades deve ser 9", instance.qtdPoligonosUnidades(), qtdUnidades);
         assertEquals("Numero de poligonos Dezenas deve ser 27", instance.qtdPoligonosDezenas(), qtdDezenas);
         assertEquals("Numero de poligonos Centenas deve ser 9", instance.qtdPoligonosCentenas(), qtdCentenas);
@@ -77,9 +78,7 @@ public class AppTest {
         System.out.println("construirArvoreTotal");
         App instance = new App();
         instance.lerDados();
-        ArvorePoligonosPorNome arvoreTotal = instance.construirArvorePoligonosTotal();
-        assertEquals("O tamanho da arvore é 999", arvoreTotal.size(), 999);
-        assertTrue("O menor elemento é o 'henagon' com 1 lado", arvoreTotal.smallestElement().equals(new PoligonoString(10, "decagon")));
+        assertEquals("O tamanho da arvore é 999", instance.qtdPoligonosTotal(), 999);
     }
 
     /**
@@ -90,7 +89,7 @@ public class AppTest {
         System.out.println("test NomeDadoOLado");
         App app = new App();
         app.lerDados();
-        ArvorePoligonosPorNome arvore_pol_gerados = app.construirArvorePoligonosTotal();
+        app.construirArvorePoligonosTotal();
 
         Ficheiro f = new Ficheiro();
         List<String> lista = f.lerFicheiro(AppTest.FX_LADOS_NOMES);
@@ -114,6 +113,7 @@ public class AppTest {
         System.out.println("test numeroDadoNome");
         App app = new App();
         app.lerDados();
+        app.construirArvorePoligonosTotal();
 
         Ficheiro f = new Ficheiro();
         List<String> lista = f.lerFicheiro(AppTest.FX_NOME_LADOS);
@@ -155,33 +155,32 @@ public class AppTest {
      * Test of lowestCommonAncestor method, of class App. Existe uma imagem de
      * uma árvore gerada na raiz do projeto para teste
      */
-//    @Test
-//    public void testLowestCommonAncestor() {
-//        System.out.println("lowestCommonAncestor");
-//        App instance = new App();
-//        instance.lerDados();
-//
-//        final int LIM_INF = 1, LIM_SUP = 63;
-//        ArvorePoligonos avr = instance.construirArvorePoligonosRange(LIM_INF, LIM_SUP);
-//
-//        //1º Caso
-//        String p1 = "triacontatrigon"; // 33
-//        String p2 = "pentacontaenneagon"; // 59
-//        Poligono p_esperado = new Poligono(48, "tetracontaoctagon");
-//        assertEquals("O poligono antessessor comum mais proximo é o 'tetracontaoctagon'", p_esperado, instance.lowestCommonAncestorTest(avr, p1, p2));
-//
-//        //2º Caso
-//        p1 = instance.construirNomeDoPoligono(1);
-//        p2 = instance.construirNomeDoPoligono(63);
-//        p_esperado = new Poligono(32, instance.construirNomeDoPoligono(32));
-//        assertEquals("O poligono antessessor comum mais proximo é o 'tetracontaoctagon'", p_esperado, instance.lowestCommonAncestorTest(avr, p1, p2));
-//
-//        //3º Caso
-//        p1 = instance.construirNomeDoPoligono(1);
-//        p2 = instance.construirNomeDoPoligono(15);
-//        p_esperado = new Poligono(8, instance.construirNomeDoPoligono(8));
-//        assertEquals("O poligono antessessor comum mais proximo é o 'tetracontaoctagon'", p_esperado, instance.lowestCommonAncestorTest(avr, p1, p2));
-//
-//    }
+    @Test
+    public void testLowestCommonAncestor() {
+        System.out.println("lowestCommonAncestor");
+        App instance = new App();
+        instance.lerDados();
 
+        final int LIM_INF = 1, LIM_SUP = 63;
+        AVL<Poligono> avr = instance.construirArvorePoligonosRange(LIM_INF, LIM_SUP);
+
+        //1º Caso
+        String p1 = "triacontatrigon"; // 33
+        String p2 = "pentacontaenneagon"; // 59
+        Poligono p_esperado = new Poligono(48, "tetracontaoctagon");
+        assertEquals("O poligono antessessor comum mais proximo é o 'tetracontaoctagon'", p_esperado, instance.lowestCommonAncestorTest(avr, p1, p2));
+
+        //2º Caso
+        p1 = instance.construirNomeDoPoligono(1);
+        p2 = instance.construirNomeDoPoligono(63);
+        p_esperado = new Poligono(32, instance.construirNomeDoPoligono(32));
+        assertEquals("O poligono antessessor comum mais proximo é o 'tetracontaoctagon'", p_esperado, instance.lowestCommonAncestorTest(avr, p1, p2));
+
+        //3º Caso
+        p1 = instance.construirNomeDoPoligono(1);
+        p2 = instance.construirNomeDoPoligono(15);
+        p_esperado = new Poligono(8, instance.construirNomeDoPoligono(8));
+        assertEquals("O poligono antessessor comum mais proximo é o 'tetracontaoctagon'", p_esperado, instance.lowestCommonAncestorTest(avr, p1, p2));
+
+    }
 }

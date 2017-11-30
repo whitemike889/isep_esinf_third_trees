@@ -19,15 +19,15 @@ public class App {
     /**
      * Árvore das unidades
      */
-    private ArvorePoligonos arvore_unidades;
+    private AVL<Poligono> arvore_unidades;
     /**
      * Árvore das dezenas
      */
-    private ArvorePoligonos arvore_dezenas;
+    private AVL<Poligono> arvore_dezenas;
     /**
      * Árvore das centenas
      */
-    private ArvorePoligonos arvore_centenas;
+    private AVL<Poligono> arvore_centenas;
 
     /**
      * Árvore construida
@@ -123,9 +123,13 @@ public class App {
      * @return Nome do campo das unidades de um poligono
      */
     private String construirNomePolUnidades(int unidades) {
-        String temp = "";
-        temp = arvore_unidades.procurarNomePoligonoPorNumero(unidades);
-        return temp;
+
+        Poligono p = new Poligono(unidades, "");
+        Poligono el = arvore_unidades.search(p);
+        if (el == null) {
+            return "";
+        }
+        return el.getPrefixo();
 
     }
 
@@ -137,15 +141,19 @@ public class App {
      * @return Nome do campo das dezenas de um poligono
      */
     private String construirNomePolDezenas(int dezenas) {
-        String temp = "";
+        Poligono p = new Poligono(dezenas, "");
+        Poligono temp = null;
         if (dezenas >= 10 && dezenas <= 29) {
-            temp = arvore_dezenas.procurarNomePoligonoPorNumero(dezenas);
+            temp = arvore_dezenas.search(p);
         } else {
             int unidades = dezenas % 10;
             dezenas = dezenas - unidades;
-            temp = arvore_dezenas.procurarNomePoligonoPorNumero(dezenas);
+            temp = arvore_dezenas.search(p);
         }
-        return temp;
+        if (temp == null) {
+            return "";
+        }
+        return temp.getPrefixo();
     }
 
     /**
@@ -156,9 +164,12 @@ public class App {
      * @return Nome do campo das centenas de um poligono
      */
     private String construirNomePolCentenas(int centenas) {
-        String temp = "";
-        temp = arvore_centenas.procurarNomePoligonoPorNumero(centenas);
-        return temp;
+        Poligono p = new Poligono(centenas, "");
+        Poligono el = arvore_centenas.search(p);
+        if (el == null) {
+            return "";
+        }
+        return el.getPrefixo();
     }
     //=================================C========================================
 
@@ -167,16 +178,19 @@ public class App {
      *
      * @return Uma árvore com todos os polígonos de 1 a 999
      */
-    public ArvorePoligonosPorNome construirArvorePoligonosTotal() {
-        ArvorePoligonosPorNome arvore = new ArvorePoligonosPorNome();
+    public void construirArvorePoligonosTotal() {
+        AVL<Poligono> arv_pol_lado = new AVL<>();
+        AVL<PoligonoString> arv_pol_string = new AVL<>();
         final int LIM_INF = 1, LIM_SUP = 999;
         for (int i = LIM_INF; i <= LIM_SUP; i++) {
             String s = construirNomeDoPoligono(i);
-            PoligonoString p = new PoligonoString(i, s);
-            arvore.insert(p);
+            Poligono p_l = new Poligono(i, s);
+            PoligonoString p_s = new PoligonoString(i, s);
+            arv_pol_lado.insert(p_l);
+            arv_pol_string.insert(p_s);
         }
-        arvore_poligonos_por_nome = arvore;
-        return arvore;
+        arvore_poligonos_por_nome = arv_pol_string;
+        arvore_poligonos_por_lado = arv_pol_lado;
     }
     //=================================D========================================
 
@@ -187,10 +201,15 @@ public class App {
      * @return numero de lados do poligono
      */
     public int numeroLados(String nome) {
-        if (arvore_poligonos_por_nome == null) {
-            arvore_poligonos_por_nome = construirArvorePoligonosTotal();
+        if (arvore_poligonos_por_lado == null) {
+            construirArvorePoligonosTotal();
         }
-        return arvore_poligonos_por_nome.procurarNumLadosPoligonosPorNome(nome);
+        PoligonoString ps = new PoligonoString(0, nome);
+        PoligonoString p_encontrado = arvore_poligonos_por_nome.search(ps);
+        if (p_encontrado == null) {
+            return -1;
+        }
+        return p_encontrado.getNumLados();
     }
 
     //=================================E========================================
@@ -212,7 +231,11 @@ public class App {
             lim_sup = x1;
         }
         for (int i = lim_inf; i <= lim_sup; i++) {
-            listaPoligonos.push(construirNomeDoPoligono(i));
+            Poligono p = new Poligono(i, "");
+            Poligono p_encontrado = arvore_poligonos_por_lado.search(p);
+            if (p_encontrado != null) {
+                listaPoligonos.push(p_encontrado.getPrefixo());
+            }
         }
         return listaPoligonos;
     }
@@ -225,15 +248,21 @@ public class App {
      * @param poligono2 Nome de outro poligono
      * @return Antecessor comum mais próximo
      */
-    public PoligonoString lowestCommonAncestor(String poligono1, String poligono2) {
-        if (arvore_poligonos_por_nome == null) {
-            arvore_poligonos_por_nome = construirArvorePoligonosTotal();
+    public Poligono lowestCommonAncestor(String poligono1, String poligono2) {
+        if (arvore_poligonos_por_lado == null) {
+            construirArvorePoligonosTotal();
         }
-        final int LIM_INF = 1, LIM_SUP = 999;
-        ArvorePoligonos arvore_poligonos_por_numero = construirArvorePoligonosRange(LIM_INF, LIM_SUP);
-        PoligonoString p1 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono1);
-        PoligonoString p2 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono2);
-        PoligonoString antecessor = arvore_poligonos_por_nome.lowestCommonAncestor(p1, p2);
+        PoligonoString p_s1 = arvore_poligonos_por_nome.search(new PoligonoString(0, poligono1));
+        PoligonoString p_s2 = arvore_poligonos_por_nome.search(new PoligonoString(0, poligono2));
+        if (p_s1 == null || p_s2 == null) {
+            return null;
+        }
+        Poligono p_1 = new Poligono(p_s1);
+        Poligono p_2 = new Poligono(p_s2);
+        Poligono antecessor = arvore_poligonos_por_lado.lowestCommonAncestor(p_1, p_2);
+        if (antecessor == null) {
+            return null;
+        }
         return antecessor;
     }
 
@@ -245,11 +274,22 @@ public class App {
      * @param poligono2 Poligono 2
      * @return
      */
-    public PoligonoString lowestCommonAncestorTest(ArvorePoligonosPorNome arvore_test, String poligono1, String poligono2) {
+    public Poligono lowestCommonAncestorTest(AVL<Poligono> arvore_test, String poligono1, String poligono2) {
 
-        PoligonoString p1 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono1);
-        PoligonoString p2 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono2);
-        PoligonoString antecessor = arvore_test.lowestCommonAncestor(p1, p2);
+        if (arvore_poligonos_por_lado == null) {
+            construirArvorePoligonosTotal();
+        };
+        PoligonoString p_s1 = arvore_poligonos_por_nome.search(new PoligonoString(0, poligono1));
+        PoligonoString p_s2 = arvore_poligonos_por_nome.search(new PoligonoString(0, poligono2));
+        if (p_s1 == null || p_s2 == null) {
+            return null;
+        }
+        Poligono p_1 = new Poligono(p_s1);
+        Poligono p_2 = new Poligono(p_s2);
+        Poligono antecessor = arvore_test.lowestCommonAncestor(p_1, p_2);
+        if (antecessor == null) {
+            return null;
+        }
         return antecessor;
     }
 
@@ -261,8 +301,8 @@ public class App {
      * @param lim_sup limite superior
      * @return Uma árvore com todos os polígonos de lim_inf a lim_sup
      */
-    public ArvorePoligonos construirArvorePoligonosRange(int lim_inf, int lim_sup) {
-        ArvorePoligonos arvore = new ArvorePoligonos();
+    public AVL<Poligono> construirArvorePoligonosRange(int lim_inf, int lim_sup) {
+        AVL<Poligono> arvore = new AVL<>();
         for (int i = lim_inf; i <= lim_sup; i++) {
             String s = construirNomeDoPoligono(i);
             Poligono p = new Poligono(i, s);
@@ -304,7 +344,7 @@ public class App {
      * @return
      */
     public int qtdPoligonosTotal() {
-        return arvore_unidades.size() + arvore_dezenas.size() + arvore_centenas.size();
+        return arvore_poligonos_por_lado.size();
 
     }
 

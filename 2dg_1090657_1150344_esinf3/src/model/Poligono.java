@@ -57,7 +57,7 @@ public class Poligono implements Comparable<Poligono> {
         if (this.num_lados != other.num_lados) {
             return false;
         }
-        return prefixo.equals(other.prefixo);
+        return true;
     }
 
 }

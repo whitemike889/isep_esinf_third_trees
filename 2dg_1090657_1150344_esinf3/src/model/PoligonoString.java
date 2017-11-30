@@ -44,9 +44,6 @@ public class PoligonoString implements Comparable<PoligonoString> {
             return false;
         }
         final PoligonoString other = (PoligonoString) obj;
-        if (this.num_lados != other.num_lados) {
-            return false;
-        }
         return prefixo.equals(other.prefixo);
     }
 

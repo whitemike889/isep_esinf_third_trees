@@ -214,7 +214,7 @@ public class BST<E extends Comparable<E>> implements BSTInterface<E> {
         if (node == null) {
             return null;
         }
-        int cmp = node.getElement().compareTo(element);
+        int cmp = element.compareTo(node.getElement());
         if (cmp == 0) {
             return node;
         }
