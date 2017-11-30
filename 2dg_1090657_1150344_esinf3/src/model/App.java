@@ -5,9 +5,8 @@
  */
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
+import tree.AVL;
 import tree.ArvorePoligonos;
 import tree.ArvorePoligonosPorNome;
 
@@ -33,7 +32,9 @@ public class App {
     /**
      * Árvore construida
      */
-    private ArvorePoligonosPorNome arvore_poligonos_por_nome;
+    private AVL<PoligonoString> arvore_poligonos_por_nome;
+
+    private AVL<Poligono> arvore_poligonos_por_lado;
 
     private static final String pol_pref_uni = "poligonos_prefixo_unidades.txt";
     private static final String pol_pref_dez = "poligonos_prefixo_dezenas.txt";
@@ -174,6 +175,7 @@ public class App {
             PoligonoString p = new PoligonoString(i, s);
             arvore.insert(p);
         }
+        arvore_poligonos_por_nome = arvore;
         return arvore;
     }
     //=================================D========================================
@@ -203,9 +205,6 @@ public class App {
      */
     public Iterable<String> poligonosIntervalo(int x1, int x2) {
         LinkedList<String> listaPoligonos = new LinkedList<>();
-        if (arvore_poligonos_por_nome == null) {
-            arvore_poligonos_por_nome = construirArvorePoligonosTotal();
-        }
         int lim_inf = x1;
         int lim_sup = x2;
         if (x1 > x2) {
@@ -230,6 +229,8 @@ public class App {
         if (arvore_poligonos_por_nome == null) {
             arvore_poligonos_por_nome = construirArvorePoligonosTotal();
         }
+        final int LIM_INF = 1, LIM_SUP = 999;
+        ArvorePoligonos arvore_poligonos_por_numero = construirArvorePoligonosRange(LIM_INF, LIM_SUP);
         PoligonoString p1 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono1);
         PoligonoString p2 = arvore_poligonos_por_nome.procurarPoligonoStringPorNome(poligono2);
         PoligonoString antecessor = arvore_poligonos_por_nome.lowestCommonAncestor(p1, p2);

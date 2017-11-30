@@ -19,6 +19,11 @@ public class Poligono implements Comparable<Poligono> {
         this.prefixo = prefixo;
     }
 
+    public Poligono(PoligonoString ps) {
+        this.num_lados = ps.getNumLados();
+        this.prefixo = ps.getPrefixo();
+    }
+
     public int getNumLados() {
         return num_lados;
     }
