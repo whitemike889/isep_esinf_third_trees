@@ -8,8 +8,6 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import tree.AVL;
-import tree.ArvorePoligonos;
-import tree.ArvorePoligonosPorNome;
 
 /**
  *
@@ -55,6 +53,11 @@ public class AppTest {
 
         expResult = "enneacontahenagon";
         numlados = 91;
+        result = instance.construirNomeDoPoligono(numlados);
+        assertEquals(expResult, result);
+
+        expResult = "henagon";
+        numlados = 1;
         result = instance.construirNomeDoPoligono(numlados);
         assertEquals(expResult, result);
     }

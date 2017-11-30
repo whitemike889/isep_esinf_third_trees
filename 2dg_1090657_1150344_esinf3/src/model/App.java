@@ -7,8 +7,6 @@ package model;
 
 import java.util.LinkedList;
 import tree.AVL;
-import tree.ArvorePoligonos;
-import tree.ArvorePoligonosPorNome;
 
 /**
  *
@@ -30,10 +28,13 @@ public class App {
     private AVL<Poligono> arvore_centenas;
 
     /**
-     * Árvore construida
+     * Árvore construida ordenado por String
      */
     private AVL<PoligonoString> arvore_poligonos_por_nome;
 
+    /**
+     * Árvore construida ordenada Por Num de lados
+     */
     private AVL<Poligono> arvore_poligonos_por_lado;
 
     private static final String pol_pref_uni = "poligonos_prefixo_unidades.txt";
@@ -41,9 +42,9 @@ public class App {
     private static final String pol_pref_cent = "poligonos_prefixo_centenas.txt";
 
     public App() {
-        arvore_unidades = new ArvorePoligonos();
-        arvore_dezenas = new ArvorePoligonos();
-        arvore_centenas = new ArvorePoligonos();
+        arvore_unidades = new AVL<>();
+        arvore_dezenas = new AVL<>();
+        arvore_centenas = new AVL<>();
     }
 
     /**
@@ -103,9 +104,6 @@ public class App {
         int unidades = numlados % 10;
         int dezenas = numlados - centenas;
 
-        if (dezenas > CASO_ESPECIAL_DEZENAS_LIM_SUP) {
-            dezenas = dezenas - unidades;
-        }
         String expUnidades = "";
         String expDezenas = "";
         String expCentenas = "";
@@ -159,6 +157,7 @@ public class App {
         } else {
             int unidades = dezenas % 10;
             dezenas = dezenas - unidades;
+            p = new Poligono(dezenas, "");
             temp = arvore_dezenas.search(p);
         }
         if (temp == null) {
