@@ -52,6 +52,11 @@ public class AppTest {
         String expResult = "hectaenneakaidecagon";
         String result = instance.construirNomeDoPoligono(numlados);
         assertEquals(expResult, result);
+
+        expResult = "enneacontahenagon";
+        numlados = 91;
+        result = instance.construirNomeDoPoligono(numlados);
+        assertEquals(expResult, result);
     }
 
     /**
@@ -78,6 +83,7 @@ public class AppTest {
         System.out.println("construirArvoreTotal");
         App instance = new App();
         instance.lerDados();
+        instance.construirArvorePoligonosTotal();
         assertEquals("O tamanho da arvore é 999", instance.qtdPoligonosTotal(), 999);
     }
 
@@ -139,7 +145,8 @@ public class AppTest {
         System.out.println("poligonosIntervalo");
         App instance = new App();
         instance.lerDados();
-        LinkedList<String> poligonos = (LinkedList<String>) instance.poligonosIntervalo(56, 827);
+        instance.construirArvorePoligonosTotal();
+        LinkedList<String> poligonos = (LinkedList<String>) instance.poligonosIntervaloOrdemDecrescente(56, 827);
         int index = 0;
         assertEquals("Existem 772 poligonos de intervalo entre 56 e 827", poligonos.size(), 772);
         assertEquals("O index do octahectaicosiheptagon é 0", index, poligonos.indexOf("octahectaicosiheptagon"));

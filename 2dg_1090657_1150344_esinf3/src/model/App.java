@@ -96,23 +96,34 @@ public class App {
         if (numlados <= 0 || numlados >= 1000) {
             return "";
         }
+        final int CASO_ESPECIAL_DEZENAS_LIM_INF = 10;
+        final int CASO_ESPECIAL_DEZENAS_LIM_SUP = 29;
+        final String SUFIXO = "gon";
         int centenas = (numlados / 100) * 100;
         int unidades = numlados % 10;
         int dezenas = numlados - centenas;
 
+        if (dezenas > CASO_ESPECIAL_DEZENAS_LIM_SUP) {
+            dezenas = dezenas - unidades;
+        }
         String expUnidades = "";
         String expDezenas = "";
         String expCentenas = "";
 
-        expCentenas = construirNomePolCentenas(centenas);
-        expDezenas = construirNomePolDezenas(dezenas);
-        expUnidades = construirNomePolUnidades(unidades);
-
-        if (dezenas >= 10 && dezenas <= 29) {
-            return expCentenas + expDezenas + "gon";
+        if (centenas > 0) {
+            expCentenas = construirNomePolCentenas(centenas);
+        }
+        if (dezenas > 0) {
+            expDezenas = construirNomePolDezenas(dezenas);
+        }
+        if (unidades > 0) {
+            expUnidades = construirNomePolUnidades(unidades);
+        }
+        if (dezenas >= CASO_ESPECIAL_DEZENAS_LIM_INF && dezenas <= CASO_ESPECIAL_DEZENAS_LIM_SUP) {
+            return expCentenas + expDezenas + SUFIXO;
         }
 
-        return expCentenas + expDezenas + expUnidades + "gon";
+        return expCentenas + expDezenas + expUnidades + SUFIXO;
     }
 
     /**
@@ -222,7 +233,7 @@ public class App {
      * @return Lista dos nomes dos poligonos no intervalo pretendido em ordem
      * decrescente
      */
-    public Iterable<String> poligonosIntervalo(int x1, int x2) {
+    public Iterable<String> poligonosIntervaloOrdemDecrescente(int x1, int x2) {
         LinkedList<String> listaPoligonos = new LinkedList<>();
         int lim_inf = x1;
         int lim_sup = x2;
