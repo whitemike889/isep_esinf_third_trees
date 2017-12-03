@@ -66,6 +66,11 @@ public class AppTest {
         numlados = 1;
         result = instance.construirNomeDoPoligono(numlados);
         assertEquals(expResult, result);
+
+        expResult = "tetrahectatetracontahenagon";
+        numlados = 441;
+        result = instance.construirNomeDoPoligono(numlados);
+        assertEquals(expResult, result);
     }
 
     /**

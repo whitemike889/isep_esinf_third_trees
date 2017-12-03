@@ -143,21 +143,23 @@ public class AVL<E extends Comparable<E>> extends BST<E> {
     }
 
     public E lowestCommonAncestor(E el1, E el2) {
-        return lowestCommonAncestor(root, el1, el2);
-    }
+        return lowestCommonAncestor(root, el1, el2); //O(logn)
+    }                                               //Total:O(logn)
 
     private E lowestCommonAncestor(Node<E> node, E el1, E el2) {
-        if (node == null) {
-            return null;
+        if (node == null) {                                 //O(1)
+            return null;                                    //O(1)
         }
-        if (node.getElement().compareTo(el1) > 0 && node.getElement().compareTo(el2) > 0) {
-            return lowestCommonAncestor(node.getLeft(), el1, el2);
+        if (el1.compareTo(node.getElement()) < 0 
+                && el2.compareTo(node.getElement()) < 0) { //O(1)
+            return lowestCommonAncestor(node.getLeft(), el1, el2); //O(logn)
         }
-        if (node.getElement().compareTo(el1) < 0 && node.getElement().compareTo(el2) < 0) {
-            return lowestCommonAncestor(node.getRight(), el1, el2);
+        if (el1.compareTo(node.getElement()) > 0 
+                && el2.compareTo(node.getElement()) > 0) {  //O(1)
+            return lowestCommonAncestor(node.getRight(), el1, el2); //O(logn)
         }
-        return node.getElement();
-    }
+        return node.getElement();                           //O(1)
+    }                                                       //O(logn)
 
     public E search(E element) {
         Node<E> n = find(element, this.root);

@@ -52,10 +52,10 @@ public class Ficheiro {
         List<String> conteudoFich = lerFicheiro(nomeFicheiro);                          //O(n)
 
         String linhaSplit[];                                                            //O(1)
-        for (String linha : conteudoFich) {                                             //O(n)
+        for (String linha : conteudoFich) {                                             //O(n) * O(logn)
             linhaSplit = linha.split(";");                                              //O(1)
             Poligono p = new Poligono(Integer.parseInt(linhaSplit[0]), linhaSplit[1]);  //O(1)
-            app.inserirPoligono(p);                                                     //O(1)
+            app.inserirPoligono(p);                                                     //O(logn)
         }
-    }
+    }                                                                                   //Total:O(nlogn)
 }
